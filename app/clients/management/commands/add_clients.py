@@ -1,30 +1,21 @@
-# from django.core.management.base import BaseCommand
-
-# from ...models import Client
-
-
-# class Command(BaseCommand):
-#     def add_arguments(self, parser):
-#         parser.add_argument("file_name", type=str)
-
-#     def handle(self, *args, **kwargs):
-#         file_name = kwargs["file_name"]
-#         with open(f"{file_name}") as file:
-#             for row in file:
-#                 name = row.lower().replace("\n", "")
-#                 self.stdout.write(self.style.SUCCESS(f"{name} added"))
-#                 Client.objects.get_or_create(
-#                     name=name,
-#                 )
-#         self.stdout.write(self.style.SUCCESS("list of objects added"))
-
-
 import csv
 
 from django.contrib.auth.models import User
 from django.core.management.base import BaseCommand
 
-from ...models import Client
+from ...models import Client, Gender, License, Location
+
+
+def get_client_gender(pk):
+    return Gender.objects.get(pk=pk)
+
+
+def get_client_location(pk):
+    return Location.objects.get(pk=pk)
+
+
+def get_client_license(pk):
+    return License.objects.get(pk=pk)
 
 
 class Command(BaseCommand):
@@ -40,6 +31,24 @@ class Command(BaseCommand):
                     pass
                 else:
                     client_id = row[0]
-                    name = row[1]
-                    self.stdout.write(self.style.SUCCESS(f"{client_id}, {name} added"))
-                    user = Client.objects.get_or_create(client_id=client_id, name=name)
+                    client = row[1]
+                    gender = get_client_gender(row[3])
+                    location = get_client_location(row[2])
+                    # license = get_client_license(row[5])
+                    # print("license", license, type(license))
+
+                    tel = row[7]
+                    national_insurance_id = row[8]
+                    annual_venue_fee = row[9]
+
+                    Client.objects.get_or_create(
+                        client_id=client_id,
+                        client=client,
+                        location=location,
+                        gender=gender,
+                        tel=tel,
+                        national_insurance_id=national_insurance_id,
+                        annual_venue_fee=annual_venue_fee,
+                        # license=license,
+                    )
+                    self.stdout.write(self.style.SUCCESS(f"{client_id} added"))

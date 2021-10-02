@@ -10,20 +10,16 @@ Clients
 <div class="container my-5 min-vh-100">
     <h1 class="display-1 border-bottom">Clients list</h1>
     <a href=""
-        class="btn btn-lg btn-outline-dark border-3 rounded-pill mx-auto my-3">Add
+        class="btn btn-lg btn-dark rounded-pill mx-auto my-3">Add
         a
         client</a>
-    <div style="max-width: 28rem;">
-        <form class="my-3 mx-auto"
-            action=""
-            method="get">
-            <input class="form-control form-control-sm rounded-pill"
-                type="text"
-                name="q"
-                placeholder="Search clients by (name, detail, email)..."
-                aria-label="Search">
-        </form>
-    </div>
+
+
+    {% block client %}
+    {% include 'clients/client_filter_form.html' %}
+
+    {% endblock client %}
+
 
     <!-- <div class="my-3"
         style="max-width: 28rem;">
@@ -33,25 +29,44 @@ Clients
         {% endfor %}
 
     </div> -->
+
+    {% if is_paginated %}
     {% include 'pagination.html' %}
-    <ul class="list-group"
-        style="max-width: 28rem;">
-        {% for object in object_list %}
-        <li class="list-group-item border-0 border-bottom">
-            <a class="text-decoration-none text-dark"
-                href="{{object.get_absolute_url}}">
+    {% endif %}
 
-                ({{object.client_id}}), {{object.name|title}} {{object.annual_venue_fee}}
-            </a>
-        </li>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Clients ID</th>
+                <th scope="col">annual_venue_fee</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for object in object_list %}
+
+            <tr>
+                <td>
+                    <a class="text-dark"
+                        href="{{object.get_absolute_url}}">
+                        {{object.client_id}}
+                    </a>
+                </td>
+                <td>{{object.annual_venue_fee}}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td class="text-center"
+                    colspan="2">No Clients</td>
+            </tr>
+            {% endfor %}
 
 
-        {% empty %}
-        <li class="list-group-item">No Suppliers</li>
-        {% endfor %}
+        </tbody>
+    </table>
 
-    </ul>
+    {% if is_paginated %}
     {% include 'pagination.html' %}
+    {% endif %}
 
 </div>
 {% endblock content %}

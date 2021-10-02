@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% load humanize %}
+
+{% block head_title %}
+{{object|title}}
+{% endblock head_title %}
+
+
+{% block content %}
+<div class="container my-5 min-vh-100">
+    <h1 class="display-1 border-bottom">{{object|title}}</h1>
+    
+    <a href="{% url 'clients:list' %}" class="btn btn-dark my-3">Clients</a>
+    <hr>
+    <div class="container">
+        <div class="card rouneded shadow my-5"
+            style="max-width: 60rem;">
+          
+            <div class="card-body">
+                <ul>
+                    <li>
+                        <a target="_blank"
+                            href="{{object.website}}">
+                            {{object.website}}
+                        </a>
+                    </li>
+                    <li>
+                        <a class="text-dark"
+                            href="tel:{{object.tel|default:'#'}}">
+                            {{object.tel|default:'No tel number'}}
+                        </a>
+                    </li>
+                    <li>
+                        <a class="text-dark"
+                            href="mailto:{{object.email|default:'#'}}">
+                            {{object.email|default:'No email'}}
+                        </a>
+                    </li>
+                    <li>
+                        {{object.location|default:'No address'}}
+                    </li>
+
+                    <p>
+                        {{object.description|default:'No description'}}
+                    </p>
+                   
+                </ul>
+               
+                <p class="small text-muted text-end m-0">updated {{object.updated_at|naturaltime}}
+                    by {{object.updated_by}}</p>
+            </div>
+            <div class="card-footer">
+                <div class="small d-grid gap-2 d-md-block text-end">
+                    <a href="{{object.get_absolute_update_url}}" class="btn btn-warning">Edit</a>
+                </div>
+            </div>
+        </div>
+       
+
+    </div>
+</div>
+{% endblock content %}

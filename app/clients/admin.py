@@ -5,14 +5,28 @@ from .models import Client, Gender, License, Location
 class ClientAdmin(admin.ModelAdmin):
     list_display = [
         "client_id",
-        "name",
+        "client",
         "annual_venue_fee",
         "annual_venue_fee_paid",
         "paid",
-        "license",
+        "slug",
     ]
 
 
 admin.site.register(Gender)
-admin.site.register(Location)
-admin.site.register(License)
+
+@admin.register(License)
+class LicenseAdmin(admin.ModelAdmin):
+        list_display = [
+        "license",
+        "pk",
+    ]
+@admin.register(Location)
+class LocationAdmin(admin.ModelAdmin):
+        list_display = [
+        "location",
+        "pk",
+    ]
+
+
+

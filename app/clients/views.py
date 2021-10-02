@@ -1,7 +1,40 @@
 from django.shortcuts import render
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
-
+from django.db.models import Q
 from .models import Client
+
+
+class ClientFilterView(ListView):
+    model = Client
+    paginate_by = 10
+
+    def get_queryset(self):
+        queryset = Client.objects.all()
+        q = self.request.GET.get("q")
+        start_date_created_at = self.request.GET.get("start_date_created_at")
+        end_date_created_at = self.request.GET.get("end_date_created_at")
+        print(
+            "start_date_created_at",
+            start_date_created_at,
+            "end_date_created_at",
+            end_date_created_at,
+            "q",
+            q,
+        )
+        if q:
+            queryset = queryset.filter(
+                Q(name__icontains=q)
+                | Q(client_id__icontains=q)
+                | Q(email__icontains=q)
+                | Q(national_insurance_id__icontains=q)
+                | Q(dob__gte=start_date_created_at) & Q(dob__lte=end_date_created_at)
+            ).distinct()
+        if start_date_created_at and end_date_created_at:
+            queryset = queryset.filter(
+                Q(dob__gte=start_date_created_at) & Q(dob__lte=end_date_created_at)
+            ).distinct()
+
+        return queryset
 
 
 class ClientListView(ListView):
@@ -21,3 +54,4 @@ class ClientCreateView(CreateView):
 class ClientUpdateView(UpdateView):
     model = Client
     fields = "__all__"
+    template_name_suffix = "_update_form"
