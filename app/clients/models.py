@@ -33,6 +33,9 @@ class Location(models.Model):
 class Gender(models.Model):
     gender = models.CharField(max_length=6, unique=True)
 
+    class Meta:
+        ordering = ['gender']
+
     def __str__(self):
         return self.gender
 

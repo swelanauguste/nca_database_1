@@ -23,11 +23,10 @@ class ClientFilterView(ListView):
         )
         if q:
             queryset = queryset.filter(
-                Q(name__icontains=q)
+                Q(client__icontains=q)
                 | Q(client_id__icontains=q)
                 | Q(email__icontains=q)
                 | Q(national_insurance_id__icontains=q)
-                | Q(dob__gte=start_date_created_at) & Q(dob__lte=end_date_created_at)
             ).distinct()
         if start_date_created_at and end_date_created_at:
             queryset = queryset.filter(
