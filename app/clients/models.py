@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
+from django.db.models import Sum
 
 
 class License(models.Model):
@@ -74,6 +75,12 @@ class Client(models.Model):
 
     def get_absolute_update_url(self):
         return reverse("clients:update", kwargs={"slug": self.slug})
+
+    def get_client_payment(self):
+        return self.payments.all()
+
+    def get_total_payments(self):
+        return self.payments.all().aggregate(Sum('amount'))['amount__sum']   
 
     class Meta:
         ordering = ["client"]

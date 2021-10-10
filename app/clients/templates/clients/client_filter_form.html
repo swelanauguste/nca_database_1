@@ -1,38 +1,38 @@
 <div class="my-5"
-style="max-width: 50rem;">
+style="max-width: 36rem;">
 <form class="my-3 mx-auto"
     action="{% url 'clients:filter' %}"
     method="get">
     <h2 class="">Filter Clients</h2>
     <hr>
-    <input class="form-control form-control-sm rounded-pill"
+    <input class="form-control rounded-pill"
         type="text"
         name="q"
         placeholder="Search clients by (name, detail, email)..."
         aria-label="Search">
-    <div class="row my-3">
+    <!-- <div class="row my-3">
         <div class="col">
             <label for="start_date_created_at">Start date (dob)</label>
             <input
-                class="form-control form-control-sm rounded-pill mt-3"
+                class="form-control rounded-pill mt-3"
                 type="date"
                 name="start_date_created_at"
                 id="start_date_created_at">
         </div>
         <div class="col">
-            <label for="start_date_created_at">Start date (dob)</label>
+            <label for="start_date_created_at">End date (dob)</label>
 
             <input
-                class="form-control form-control-sm rounded-pill mt-3"
+                class="form-control rounded-pill mt-3"
                 type="date"
                 placeholder="dob"
                 name="end_date_created_at"
                 id="">
         </div>
-    </div>
+    </div> -->
     <hr>
     <div class="text-end">
-        <a class="btn btn-sm btn-secondary" href="/">Clear</a>
+        <a class="btn btn-sm btn-dark" href="/">Clear</a>
         <button class="btn btn-sm btn-outline-dark"
             type="submit">Filter</button>
     </div>

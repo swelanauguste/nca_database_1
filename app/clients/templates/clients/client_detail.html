@@ -9,22 +9,18 @@
 
 {% block content %}
 <div class="container my-5 min-vh-100">
-    <h1 class="display-1 border-bottom">{{object|title}}</h1>
-    
-    <a href="{% url 'clients:list' %}" class="btn btn-dark my-3">Clients</a>
+    <h1 class="display-1 border-bottom">{{object|title}} - ${{object.get_total_payments|floatformat:2|intcomma}}</h1>
+
+    <a href="{% url 'clients:list' %}"
+        class="btn btn-dark my-3">Clients</a>
     <hr>
+
     <div class="container">
         <div class="card rouneded shadow my-5"
             style="max-width: 60rem;">
-          
+
             <div class="card-body">
                 <ul>
-                    <li>
-                        <a target="_blank"
-                            href="{{object.website}}">
-                            {{object.website}}
-                        </a>
-                    </li>
                     <li>
                         <a class="text-dark"
                             href="tel:{{object.tel|default:'#'}}">
@@ -44,20 +40,49 @@
                     <p>
                         {{object.description|default:'No description'}}
                     </p>
-                   
+
                 </ul>
-               
-                <p class="small text-muted text-end m-0">updated {{object.updated_at|naturaltime}}
+
+                <p class="small text-muted text-end m-0">updated
+                    {{object.updated_at|naturaltime}}
                     by {{object.updated_by}}</p>
             </div>
             <div class="card-footer">
                 <div class="small d-grid gap-2 d-md-block text-end">
-                    <a href="{{object.get_absolute_update_url}}" class="btn btn-warning">Edit</a>
+                    <a href="{{object.get_absolute_update_url}}"
+                        class="btn btn-warning">Edit</a>
                 </div>
             </div>
         </div>
-       
 
+
+    </div>
+    <div class="container my-3">
+
+        <div class="card"
+            style="max-width: 36rem;">
+            <div class="card-header">
+                Payments
+            </div>
+            <div class="card-body">
+                <ol>
+                    {% for payment in object.get_client_payment %}
+                    <li>
+                        ${{payment.amount}}
+                        <br>
+                        <small class="text-muted">{{payment.date}}</small>
+                    </li>
+                    {% endfor %}
+                </ol>
+
+                <h4>
+
+                </h4>
+            </div>
+            <div class="card-footer text-end">
+                <h2>Total Payments to date - ${{object.get_total_payments|floatformat:2|intcomma}}</h2>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock content %}
