@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+
+{% block head_title %}
+Add Payment -
+{% endblock head_title %}
+
+
+{% block content %}
+<div class="container my-5">
+    <h2 class="display-4">Add Payment</h2>
+    <hr>
+
+    <form class="col-lg-4"
+        action=""
+        method="post">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit"
+            class="btn btn-outline-dark mt-3">Submit</button>
+    </form>
+</div>
+
+{% endblock content %}

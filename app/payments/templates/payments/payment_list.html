@@ -3,12 +3,10 @@
 
 
 {% block head_title %}
-Clients
+Payments
 {% endblock head_title %}
 
 {% block content %}
-
-
 
 {% block client %}
 
@@ -20,18 +18,25 @@ Clients
 {% endif %}
 
 <div class="container mt-5">
+    <div class="my-3">
+        <a href="{% url 'payments:payment-create' %}">Add Payment</a>
+    </div>
 
     {% for object in object_list %}
     <p>
         <a href="{{object.get_absolute_url}}">
             {{object}}
         </a>
-        <div class="container">
-            <span class="text-muted small">{{object.tel}}</span>
-            <span class="text-muted small">{{object.email}}</span>
-        </div>
+    <div class="container">
+        <span class="text-muted small">{{object.client}}</span>
+        <span class="text-muted small">{{object.email}}</span>
+        <span class="text-muted small">{{object.date}}</span>
+        <span class="text-muted small">{{object.description}}</span>
+    </div>
     </p>
     <hr>
+    {% empty%}
+    <p>No payments</p>
     {% endfor %}
 
 </div>

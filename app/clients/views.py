@@ -38,7 +38,7 @@ class ClientFilterView(ListView):
 
 class ClientListView(ListView):
     model = Client
-    paginate_by = 10
+    paginate_by = 5
 
 
 class ClientDetailView(DetailView):

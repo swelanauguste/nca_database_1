@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% load humanize %}
+
+{% block head_title %}
+{{object|title}}
+{% endblock head_title %}
+
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="display-6 border-bottom">{{object}}</h2>
+    <p>
+        <a href="{{object.client.get_absolute_url}}">
+            {{object.client}}
+        </a>
+    </p>
+    <p>
+        XCD$: {{object.amount|default:""}}
+    </p>
+    <p>
+        {{object.date|default:""}}
+    </p>
+    <p>
+        {{object.location|default:""}}
+    </p>
+    <p class="border-bottom">
+        XCD${{object.client.annual_venue_fee|default:""}}
+    </p>
+    <p>
+        {% for object in object.license.all %}
+    <ul>
+        <li>
+            {{object.license}}
+        </li>
+    </ul>
+    {% endfor %}
+    </p>
+
+    <p class="border-top pt-3">
+        <a class="btn btn-outline-dark px-5"
+            href="{{object.get_update_url}}">Edit</a>
+    </p>
+</div>
+{% endblock content %}

@@ -55,7 +55,7 @@ class Client(models.Model):
     tel = models.CharField(max_length=20, blank=True)
     email = models.EmailField(blank=True)
     location = models.ForeignKey(Location, null=True, on_delete=models.SET_NULL)
-    national_insurance_id = models.CharField(max_length=7, blank=True)
+    national_insurance_id = models.CharField("NIC", max_length=7, blank=True)
     annual_venue_fee = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     annual_venue_fee_paid = models.DecimalField(
         max_digits=10, decimal_places=2, default=0
