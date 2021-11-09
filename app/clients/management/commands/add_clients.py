@@ -48,7 +48,7 @@ class Command(BaseCommand):
                         gender=gender,
                         tel=tel,
                         national_insurance_id=national_insurance_id,
-                        annual_venue_fee=annual_venue_fee,
+                        # annual_venue_fee=annual_venue_fee,
                         # license=license,
                     )
                     self.stdout.write(self.style.SUCCESS(f"{client_id} added"))

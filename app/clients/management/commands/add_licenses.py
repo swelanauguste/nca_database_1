@@ -4,7 +4,7 @@ from django.core.management.base import BaseCommand
 
 from ...models import License
 
-
+# License.objects.all().delete()
 class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument("file_name", type=str)
@@ -18,6 +18,7 @@ class Command(BaseCommand):
                     pass
                 else:
                     license = row[0]
+                    vending_fee = row[1]
 
                     self.stdout.write(self.style.SUCCESS(f"{license} added"))
-                    License.objects.get_or_create(license=license)
+                    License.objects.get_or_create(license=license, vending_fee=vending_fee)

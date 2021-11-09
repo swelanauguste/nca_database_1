@@ -9,12 +9,11 @@ Clients
 {% block content %}
 
 
+<div class="my-3 col-lg-6">
+    <label for="search-clients">Search Clients</label>
+<input class="form-control" type="search" name="q" id="search-clients" placeholder="search clients">
 
-{% block client %}
-
-{% endblock client %}
-
-
+</div>
 {% if is_paginated %}
 {% include 'pagination.html' %}
 {% endif %}
@@ -27,8 +26,8 @@ Clients
             {{object}}
         </a>
         <div class="container">
-            <span class="text-muted small">{{object.tel}}</span>
-            <span class="text-muted small">{{object.email}}</span>
+            <p class="text-muted small">{{object.tel}}</p>
+            <p class="text-muted small">{{object.email}}</span>
         </div>
     </p>
     <hr>

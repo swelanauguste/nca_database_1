@@ -10,8 +10,12 @@
 {% block content %}
 <div class="container mt-5">
     <h2 class="display-6 border-bottom">{{object}}
-        (${{object.get_total_payments|floatformat:2|intcomma|default:'total payment to date $0'}})</h2>
+        (${{object.get_total_payments|floatformat:2|intcomma|default:''}})</h2>
     <p>{{object.client_id}}</p>
+    <p>
+        <span>NIC: </span>
+        {{object.national_insurance_id|default:""}}
+    </p>
     <p>
         <a href="tel:{{object.tel|default:""}}">
             {{object.tel|default:""}}
@@ -25,19 +29,13 @@
     <p>
         {{object.location|default:""}}
     </p>
-    <p>
-        <span>NIC: </span>
-        {{object.national_insurance_id|default:""}}
-    </p>
-    <p class="border-bottom">
-        XCD${{object.annual_venue_fee|default:""}}
-    </p>
+    <hr>
     <p>
     <h3>License</h3>
     {% for object in object.license.all %}
     <ul>
         <li>
-            {{object.license}}
+            {{object.license}} (${{object.vending_fee}})
         </li>
     </ul>
     {% endfor %}
