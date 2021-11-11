@@ -7,38 +7,60 @@ Clients
 {% endblock head_title %}
 
 {% block content %}
-
-
-<div class="my-3 col-lg-6">
-    <label for="search-clients">Search Clients</label>
-<input class="form-control" type="search" name="q" id="search-clients" placeholder="search clients">
-
-</div>
-{% if is_paginated %}
-{% include 'pagination.html' %}
-{% endif %}
-
 <div class="container mt-5">
-
-    {% for object in object_list %}
-    <p>
-        <a href="{{object.get_absolute_url}}">
-            {{object}}
-        </a>
-        <div class="container">
-            <p class="text-muted small">{{object.tel}}</p>
-            <p class="text-muted small">{{object.email}}</span>
-        </div>
-    </p>
+    <div class="my-3">
+        <a class="btn btn-outline-dark"
+            href="{% url 'clients:client-create' %}">Add client</a>
+    </div>
     <hr>
-    {% endfor %}
+    {% if is_paginated %}
+    {% include 'pagination.html' %}
+    {% endif %}
+    <div class="my-3 col-lg-8 my-5 mx-auto">
+        <form action="{% url 'clients:client-filter' %}">
+            <input class="form-control form-control-lg rounded-pill"
+                type="search"
+                name="q"
+                id="search-clients"
+                placeholder="search clients">
+        </form>
 
+    </div>
+
+    <table class="table table-hover table-sm">
+        <thead>
+            <tr>
+                <th scope="col">Client</th>
+                <th scope="col">Tel</th>
+                <th scope="col">email</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for object in object_list %}
+
+            <tr>
+                <td>
+                    <a class="text-decoration-none text-dark"
+                        href="{{object.get_absolute_url}}">
+                        {{object}}
+                    </a>
+                </td>
+                <td>{{object.tel}}</td>
+                <td>{{object.email}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+
+
+    {% if is_paginated %}
+    {% include 'pagination.html' %}
+    {% endif %}
 </div>
 
 
-{% if is_paginated %}
-{% include 'pagination.html' %}
-{% endif %}
 
 
 {% endblock content %}

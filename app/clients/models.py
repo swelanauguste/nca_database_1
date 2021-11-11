@@ -50,14 +50,14 @@ class Client(models.Model):
     client_id = models.CharField(max_length=10)
     slug = models.SlugField(max_length=10, unique=True, blank=True, null=True)
     client = models.CharField(max_length=255)
-    bio = models.TextField(blank=True)
     dob = models.DateField("date of birth", blank=True, null=True)
     gender = models.ForeignKey(Gender, null=True, on_delete=models.SET_NULL)
     tel = models.CharField(max_length=20, blank=True)
     email = models.EmailField(blank=True)
-    location = models.ForeignKey(Location, null=True, on_delete=models.SET_NULL)
     national_insurance_id = models.CharField("NIC", max_length=7, blank=True)
+    location = models.ForeignKey(Location, null=True, on_delete=models.SET_NULL)
     license = models.ManyToManyField(License, blank=True)
+    bio = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -67,10 +67,10 @@ class Client(models.Model):
         super(Client, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse("clients:detail", kwargs={"slug": self.slug})
+        return reverse("clients:client-detail", kwargs={"slug": self.slug})
 
     def get_absolute_update_url(self):
-        return reverse("clients:update", kwargs={"slug": self.slug})
+        return reverse("clients:client-update", kwargs={"slug": self.slug})
 
     def get_client_payment(self):
         return self.payments.all()
@@ -111,7 +111,7 @@ class Payment(models.Model):
         ordering = ["-date"]
 
     def get_absolute_url(self):
-        return reverse("payments:payment-detail", kwargs={"pk": self.pk})
+        return reverse("clients:payment-detail", kwargs={"pk": self.pk})
 
     def get_update_url(self):
-        return reverse("payments:payment-update", kwargs={"pk": self.pk})
+        return reverse("clients:payment-update", kwargs={"pk": self.pk})
